@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nguyễn Công Minh | Full-Stack Web Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Nguyễn Công Minh — Full-Stack Web Developer (React 19, Next.js 16, TypeScript, Node.js, Express, MySQL). Available for Remote roles." />
+  <style>
+    :root {
+      --bg: #0b1120;
+      --bg-card: #111827;
+      --bg-card-hover: #172033;
+      --border: #1e293b;
+      --border-accent: #14b8a6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #14b8a6;
+      --accent-soft: rgba(20, 184, 166, 0.14);
+      --blue: #38bdf8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      background: radial-gradient(circle at 15% 0%, rgba(20,184,166,0.12), transparent 40%),
+                  radial-gradient(circle at 85% 10%, rgba(56,189,248,0.10), transparent 38%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* Navbar */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 17, 32, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      height: 64px;
+    }
+    .brand { font-weight: 800; font-size: 1.1rem; letter-spacing: 0.3px; display: flex; align-items: center; gap: 10px; }
+    .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 22px; font-size: 0.92rem; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--text); }
+    .lang-btn {
+      background: var(--bg-card); color: var(--text);
+      border: 1px solid var(--border); padding: 6px 12px;
+      border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.84rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--accent); background: var(--bg-card-hover); }
+
+    /* Hero */
+    .hero { padding: 72px 0 52px; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-soft); color: #5eead4;
+      border: 1px solid rgba(20, 184, 166, 0.35);
+      padding: 6px 14px; border-radius: 999px;
+      font-size: 0.84rem; font-weight: 600; margin-bottom: 20px;
+    }
+    .pulse {
+      width: 8px; height: 8px; border-radius: 50%; background: #10b981;
+      box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 4.5vw, 3.35rem);
+      line-height: 1.15; font-weight: 800; max-width: 850px;
+      margin-bottom: 16px;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #2dd4bf, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: var(--text-muted); font-size: 1.08rem; max-width: 760px;
+      margin-bottom: 28px;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 20px; border-radius: 10px; font-weight: 700; font-size: 0.93rem;
+      transition: transform 0.15s, border-color 0.2s, background 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #042f2e; }
+    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    /* Stats bar */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .stat-card {
+      background: rgba(17, 24, 39, 0.75); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+    }
+    .stat-num { font-size: 1.75rem; font-weight: 800; color: #5eead4; line-height: 1.1; }
+    .stat-label { font-size: 0.86rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Sections */
+    section { padding: 48px 0; }
+    .section-head { margin-bottom: 28px; }
+    .section-head h2 { font-size: 1.75rem; font-weight: 800; margin-bottom: 6px; }
+    .section-head p { color: var(--text-muted); font-size: 0.98rem; }
+
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .project-card:hover { border-color: rgba(20, 184, 166, 0.6); background: var(--bg-card-hover); }
+    .project-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 12px; margin-bottom: 12px;
+    }
+    .project-tag {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+      color: var(--blue); background: rgba(56, 189, 248, 0.12);
+      padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 8px;
+    }
+    .project-card h3 { font-size: 1.35rem; font-weight: 800; }
+    .project-desc { color: var(--text-muted); margin-bottom: 16px; font-size: 0.96rem; }
+    .metrics-list {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px; margin-bottom: 18px; list-style: none;
+    }
+    .metrics-list li {
+      background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 14px; font-size: 0.88rem; color: #e2e8f0;
+    }
+    .metrics-list li strong { color: #5eead4; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .pill {
+      font-size: 0.8rem; font-weight: 600; padding: 4px 11px;
+      border-radius: 999px; background: #1e293b; color: #cbd5e1;
+    }
+    .project-links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .link-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.88rem; font-weight: 700; color: #5eead4;
+      border: 1px solid rgba(20, 184, 166, 0.4);
+      padding: 7px 14px; border-radius: 8px;
+      background: rgba(20, 184, 166, 0.08);
+    }
+    .link-chip:hover { background: rgba(20, 184, 166, 0.18); }
+
+    /* Skills & Remote */
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 20px; }
+    .box-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px;
+    }
+    .box-card h3 { font-size: 1.08rem; margin-bottom: 10px; color: #5eead4; }
+    .box-card ul { list-style: none; }
+    .box-card li { font-size: 0.91rem; color: var(--text-muted); margin-bottom: 8px; padding-left: 16px; position: relative; }
+    .box-card li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 48px; margin-top: 24px;
+      color: var(--text-muted); font-size: 0.9rem;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .nav-links a { display: none; }
+      .hero { padding: 44px 0 32px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>Nguyễn Công Minh</span>
+      </div>
+      <div class="nav-links">
+        <a href="#projects" data-vi="Dự án thực tế" data-en="Projects">Dự án thực tế</a>
+        <a href="#skills" data-vi="Kỹ năng & Remote" data-en="Skills & Remote">Kỹ năng &amp; Remote</a>
+        <a href="https://github.com/minh5499999" target="_blank" rel="noopener">GitHub</a>
+        <button class="lang-btn" id="langToggle" onclick="toggleLang()">EN / VI</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="status-pill">
+        <span class="pulse"></span>
+        <span data-vi="#OpenToWork · Sẵn sàng nhận việc Remote / Full-Stack Web Developer"
+              data-en="#OpenToWork · Available for Remote Full-Stack Web Developer Roles">
+          #OpenToWork · Sẵn sàng nhận việc Remote / Full-Stack Web Developer
+        </span>
+      </div>
+      <h1>
+        <span data-vi="Xây dựng ứng dụng Web Full-Stack " data-en="Engineering Production-Ready ">Xây dựng ứng dụng Web Full-Stack </span>
+        <span class="gradient-text" data-vi="bảo mật, chuẩn hóa dữ liệu & thực chiến" data-en="Full-Stack Web Systems">bảo mật, chuẩn hóa dữ liệu &amp; thực chiến</span>
+      </h1>
+      <p data-vi="Xin chào, tôi là Nguyễn Công Minh — Sinh viên năm cuối ngành Công nghệ Phần mềm (ĐH Hùng Vương TP.HCM). Tôi tập trung phát triển hệ thống Web Full-Stack hoàn chỉnh với React 19 / Next.js 16 / TypeScript ở Frontend và Node.js / Express / MySQL (19–25 bảng chuẩn hóa) ở Backend, kèm kiểm thử tự động và quy trình làm việc từ xa kỷ luật."
+         data-en="Hi, I'm Nguyễn Công Minh — a final-year Software Engineering student at Hung Vuong University HCMC. I build end-to-end Full-Stack web systems using React 19, Next.js 16, TypeScript, Node.js/Express, and normalized 19–25 table MySQL databases backed by automated security & unit tests.">
+        Xin chào, tôi là Nguyễn Công Minh — Sinh viên năm cuối ngành Công nghệ Phần mềm (ĐH Hùng Vương TP.HCM). Tôi tập trung phát triển hệ thống Web Full-Stack hoàn chỉnh với React 19 / Next.js 16 / TypeScript ở Frontend và Node.js / Express / MySQL (19–25 bảng chuẩn hóa) ở Backend, kèm kiểm thử tự động và quy trình làm việc từ xa kỷ luật.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="cv/Nguyen_Cong_Minh_Fullstack_Developer_CV_EN.pdf" target="_blank">
+          📄 <span data-vi="Tải CV Tiếng Anh (1 Trang PDF)" data-en="Download English CV (1-Page PDF)">Tải CV Tiếng Anh (1 Trang PDF)</span>
+        </a>
+        <a class="btn btn-secondary" href="cv/Nguyen_Cong_Minh_Fullstack_Developer_CV_VI.pdf" target="_blank">
+          📄 <span data-vi="Tải CV Tiếng Việt (1 Trang PDF)" data-en="Download Vietnamese CV (1-Page PDF)">Tải CV Tiếng Việt (1 Trang PDF)</span>
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/minh5499999" target="_blank" rel="noopener">
+          💻 GitHub (@minh5499999)
+        </a>
+        <a class="btn btn-secondary" href="mailto:afk4399@gmail.com">
+          ✉️ afk4399@gmail.com
+        </a>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">3 Systems</div>
+          <div class="stat-label" data-vi="Dự án Full-Stack hoàn chỉnh (POS, Smart City, Eco-Tourism)" data-en="Complete Full-Stack Web Applications Shipped">Dự án Full-Stack hoàn chỉnh (POS, Smart City, Eco-Tourism)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">57 / 57</div>
+          <div class="stat-label" data-vi="Bài kiểm thử tự động Unit & Bảo mật Pass 100% (Green City)" data-en="Automated Unit & Security Tests Passing (0 Failures)">Bài kiểm thử tự động Unit &amp; Bảo mật Pass 100% (Green City)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">83.7 / 100</div>
+          <div class="stat-label" data-vi="Điểm khả dụng SUS thực nghiệm (Grade A, N = 65 người dùng)" data-en="Empirical SUS Usability Score (Grade A across N = 65 Users)">Điểm khả dụng SUS thực nghiệm (Grade A, N = 65 người dùng)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">19–25 Tables</div>
+          <div class="stat-label" data-vi="Lược đồ CSDL quan hệ MySQL chuẩn hóa & tự động khôi phục" data-en="Normalized Relational MySQL Schemas & Automated Seeding">Lược đồ CSDL quan hệ MySQL chuẩn hóa &amp; tự động khôi phục</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- FEATURED PROJECTS -->
+    <section id="projects">
+      <div class="section-head">
+        <h2 data-vi="Dự án Full-Stack Mũi nhọn" data-en="Featured Full-Stack Engineering Projects">Dự án Full-Stack Mũi nhọn</h2>
+        <p data-vi="Mỗi dự án đều có mã nguồn rõ ràng, lược đồ CSDL thực tế, tài liệu kiến trúc Mermaid và hướng dẫn khởi chạy nhanh."
+           data-en="Every repository includes clean architecture documentation, full relational SQL schemas, and reproducible setup scripts.">
+          Mỗi dự án đều có mã nguồn rõ ràng, lược đồ CSDL thực tế, tài liệu kiến trúc Mermaid và hướng dẫn khởi chạy nhanh.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: Green City -->
+        <article class="project-card">
+          <span class="project-tag">Next.js 16 · React 19 · TypeScript · MySQL (19 Tables)</span>
+          <div class="project-top">
+            <h3>Green City — Smart Circular Recycling &amp; Urban Sustainability Platform</h3>
+          </div>
+          <p class="project-desc"
+             data-vi="Nền tảng đô thị xanh & tái chế tuần hoàn gồm 15 phân hệ: bản đồ thùng rác thông minh GIS, đặt lịch thu gom rác 5 bước, trao đổi đồ cũ, sàn giao dịch lô nguyên liệu tái chế (giữ chỗ 48h) và tích điểm đổi quà."
+             data-en="Modular 15-domain circular economy web platform featuring smart bin GIS telemetry, 5-step waste pickup state machines, P2P item swapping, B2B material lot trading (48h reservation TTL), and loyalty redemptions.">
+            Nền tảng đô thị xanh &amp; tái chế tuần hoàn gồm 15 phân hệ: bản đồ thùng rác thông minh GIS, đặt lịch thu gom rác 5 bước, trao đổi đồ cũ, sàn giao dịch lô nguyên liệu tái chế (giữ chỗ 48h) và tích điểm đổi quà.
+          </p>
+          <ul class="metrics-list">
+            <li data-vi="<strong>Bảo mật Server:</strong> Băm mật khẩu scrypt, chữ ký HMAC-SHA256 chống sửa role ở client, mã quà CSPRNG & Rate Limit."
+                data-en="<strong>Defense-in-Depth:</strong> scrypt hashing, HMAC-SHA256 signed role badges, CSPRNG reward codes & API rate limiting.">
+              <strong>Bảo mật Server:</strong> Băm mật khẩu scrypt, chữ ký HMAC-SHA256 chống sửa role ở client, mã quà CSPRNG &amp; Rate Limit.
+            </li>
+            <li data-vi="<strong>Kiểm thử 100%:</strong> 57/57 bài test tự động (node:test) kiểm chứng nghiệp vụ, Haversine (<100m/24h) và chống chèn số âm."
+                data-en="<strong>Verified Quality:</strong> 57/57 automated unit & security tests passing (Haversine <100m/24h dedup & injection guards).">
+              <strong>Kiểm thử 100%:</strong> 57/57 bài test tự động (node:test) kiểm chứng nghiệp vụ, Haversine (&lt;100m/24h) và chống chèn số âm.
+            </li>
+            <li data-vi="<strong>1-Minute Onboarding:</strong> Bộ script CLI db:setup & db:import khôi phục 19 bảng MySQL dưới 60 giây."
+                data-en="<strong>1-Minute Onboarding:</strong> Automated CLI snapshot scripts (db:setup / db:import) provisioning all 19 MySQL tables.">
+              <strong>1-Minute Onboarding:</strong> Bộ script CLI db:setup &amp; db:import khôi phục 19 bảng MySQL dưới 60 giây.
+            </li>
+          </ul>
+          <div class="pills">
+            <span class="pill">Next.js 16</span><span class="pill">React 19</span><span class="pill">TypeScript</span>
+            <span class="pill">Tailwind CSS v4</span><span class="pill">MySQL2</span><span class="pill">Leaflet GIS</span>
+            <span class="pill">GSAP &amp; Framer Motion</span><span class="pill">node:test</span>
+          </div>
+          <div class="project-links">
+            <a class="link-chip" href="https://github.com/minh5499999/green-city-platform" target="_blank" rel="noopener">
+              🔗 GitHub Repository &amp; Architecture Docs
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 2: Ben Tre Eureka 2026 -->
+        <article class="project-card">
+          <span class="project-tag">Euréka 2026 Research Award · Node.js/Express · MySQL (25 Tables) · Gemini AI</span>
+          <div class="project-top">
+            <h3>Bến Tre Eco-Wellness Tourism Ecosystem (Công trình NCKH Euréka 2026)</h3>
+          </div>
+          <p class="project-desc"
+             data-vi="Hệ sinh thái Web 3 cổng (Du khách, Đối tác, Quản trị viên — 11 phân hệ cốt lõi) kết hợp du lịch sinh thái bền vững và chăm sóc sức khỏe cộng đồng, tích hợp thuật toán đa tiêu chí AHP và Trợ lý AI Google Gemini."
+             data-en="3-Portal Web Ecosystem (Customer, Partner, System Admin across 11 core subsystems) unifying sustainable eco-tourism with community healthcare, powered by an AHP Eco-Score engine and Google Gemini AI.">
+            Hệ sinh thái Web 3 cổng (Du khách, Đối tác, Quản trị viên — 11 phân hệ cốt lõi) kết hợp du lịch sinh thái bền vững và chăm sóc sức khỏe cộng đồng, tích hợp thuật toán đa tiêu chí AHP và Trợ lý AI Google Gemini.
+          </p>
+          <ul class="metrics-list">
+            <li data-vi="<strong>25 Bảng MySQL & 3 Cổng:</strong> Quản lý xuyên suốt đặt tour, cơ sở y tế, hướng dẫn viên, đánh giá và 20 màn hình Admin."
+                data-en="<strong>25 MySQL Tables & 3 Portals:</strong> End-to-end tour booking, clinic lookup, guide scheduling & 20 Admin screens.">
+              <strong>25 Bảng MySQL &amp; 3 Cổng:</strong> Quản lý xuyên suốt đặt tour, cơ sở y tế, hướng dẫn viên, đánh giá và 20 màn hình Admin.
+            </li>
+            <li data-vi="<strong>Thuật toán AHP & AI GIS:</strong> Lượng hóa chỉ số bền vững Eco-Score + gợi ý lịch trình qua Gemini AI & OpenStreetMap."
+                data-en="<strong>AHP Eco-Score & AI GIS:</strong> Multi-criteria sustainability scoring + Gemini AI & Nominatim/Overpass routing.">
+              <strong>Thuật toán AHP &amp; AI GIS:</strong> Lượng hóa chỉ số bền vững Eco-Score + gợi ý lịch trình qua Gemini AI &amp; OpenStreetMap.
+            </li>
+            <li data-vi="<strong>Thực nghiệm N = 65:</strong> Đạt điểm khả dụng SUS 83,7/100 (Xếp hạng Grade A theo chuẩn Sauro & Lewis)."
+                data-en="<strong>Field Validated (N = 65):</strong> Achieved 83.7/100 weighted SUS score (Grade A international usability tier).">
+              <strong>Thực nghiệm N = 65:</strong> Đạt điểm khả dụng SUS 83,7/100 (Xếp hạng Grade A theo chuẩn Sauro &amp; Lewis).
+            </li>
+          </ul>
+          <div class="pills">
+            <span class="pill">Node.js</span><span class="pill">Express.js</span><span class="pill">MySQL (25 Tables)</span>
+            <span class="pill">JWT &amp; bcryptjs</span><span class="pill">Helmet</span><span class="pill">Google Gemini AI</span>
+            <span class="pill">OpenStreetMap API</span>
+          </div>
+          <div class="project-links">
+            <a class="link-chip" href="https://github.com/minh5499999/bentre-eco-wellness-eureka2026" target="_blank" rel="noopener">
+              🔗 GitHub Repository &amp; Research Overview
+            </a>
+          </div>
+        </article>
+
+        <!-- Project 3: ThiThiPet POS -->
+        <article class="project-card">
+          <span class="project-tag">Software Engineering Internship · React.js · Express.js · MySQL</span>
+          <div class="project-top">
+            <h3>ThiThiPet POS — Retail Point-of-Sale &amp; Inventory Management System</h3>
+          </div>
+          <p class="project-desc"
+             data-vi="Hệ thống Web POS bán hàng và quản lý kho xây dựng trong kỳ Thực tập Nghề nghiệp cho cửa hàng thú cưng ThiThiPet Shop: thanh toán nhanh tại quầy, áp mã giảm giá, phân quyền RBAC và xuất báo cáo Excel."
+             data-en="Full-Stack retail POS & inventory web system built during my Software Engineering Internship for ThiThiPet Shop: fast cashier billing, voucher validation, RBAC security, and Excel financial reporting.">
+            Hệ thống Web POS bán hàng và quản lý kho xây dựng trong kỳ Thực tập Nghề nghiệp cho cửa hàng thú cưng ThiThiPet Shop: thanh toán nhanh tại quầy, áp mã giảm giá, phân quyền RBAC và xuất báo cáo Excel.
+          </p>
+          <ul class="metrics-list">
+            <li data-vi="<strong>Đồng bộ tồn kho Real-time:</strong> Tự động kiểm tra và trừ kho ngay khi xuất hóa đơn, ngăn chặn bán vượt tồn."
+                data-en="<strong>Real-Time Stock Sync:</strong> Atomic stock validation & deduction upon checkout to eliminate manual overselling.">
+              <strong>Đồng bộ tồn kho Real-time:</strong> Tự động kiểm tra và trừ kho ngay khi xuất hóa đơn, ngăn chặn bán vượt tồn.
+            </li>
+            <li data-vi="<strong>Phân quyền & Tiện ích:</strong> Tách biệt Admin / Thu ngân (bcrypt), in hóa đơn ảnh (html2canvas) & xuất Excel (xlsx)."
+                data-en="<strong>RBAC & Store Ops:</strong> Admin vs Cashier roles (bcrypt), instant receipt capture (html2canvas) & Excel export (xlsx).">
+              <strong>Phân quyền &amp; Tiện ích:</strong> Tách biệt Admin / Thu ngân (bcrypt), in hóa đơn ảnh (html2canvas) &amp; xuất Excel (xlsx).
+            </li>
+            <li data-vi="<strong>Tối ưu hiệu năng:</strong> Nén tối ưu tài nguyên đồ họa tĩnh giảm ~80% dung lượng giúp màn hình POS phản hồi tức thì."
+                data-en="<strong>Asset Optimization:</strong> Reduced static UI image payload by ~80% (57+ MB saved) for fast terminal load.">
+              <strong>Tối ưu hiệu năng:</strong> Nén tối ưu tài nguyên đồ họa tĩnh giảm ~80% dung lượng giúp màn hình POS phản hồi tức thì.
+            </li>
+          </ul>
+          <div class="pills">
+            <span class="pill">React.js</span><span class="pill">Node.js</span><span class="pill">Express.js</span>
+            <span class="pill">MySQL</span><span class="pill">bcrypt</span><span class="pill">Multer</span>
+            <span class="pill">SheetJS (xlsx)</span><span class="pill">html2canvas</span>
+          </div>
+          <div class="project-links">
+            <a class="link-chip" href="https://github.com/minh5499999/thithipet-pos-fullstack" target="_blank" rel="noopener">
+              🔗 GitHub Repository &amp; POS Flow
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS & REMOTE WORKFLOW -->
+    <section id="skills">
+      <div class="section-head">
+        <h2 data-vi="Năng lực Kỹ thuật & Phong cách Làm việc Remote" data-en="Core Tech Stack & Remote Engineering Discipline">Năng lực Kỹ thuật &amp; Phong cách Làm việc Remote</h2>
+      </div>
+      <div class="two-col">
+        <div class="box-card">
+          <h3 data-vi="Ngăn xếp Công nghệ (Tech Stack)" data-en="Core Technology Stack">Ngăn xếp Công nghệ (Tech Stack)</h3>
+          <ul>
+            <li><strong>Frontend:</strong> React 19, Next.js 16 (App Router), TypeScript, JavaScript (ES6+), HTML5/CSS3, Tailwind CSS v4, Leaflet GIS.</li>
+            <li><strong>Backend:</strong> Node.js, Express.js, Java (JSP/Servlet), Python, RESTful API, JWT / HMAC-SHA256 / scrypt / bcrypt RBAC.</li>
+            <li><strong>Database:</strong> MySQL (thiết kế lược đồ 19–25 bảng, connection pool, snapshot CLI), PostgreSQL.</li>
+            <li><strong>DevOps &amp; AI:</strong> Git / GitHub Flow, Docker &amp; Docker Compose, Node Test Runner, Postman, Gemini API &amp; ChromaDB (RAG).</li>
+          </ul>
+        </div>
+        <div class="box-card">
+          <h3 data-vi="Kỷ luật Làm việc Từ xa (Remote-First)" data-en="Remote-First Engineering Workflow">Kỷ luật Làm việc Từ xa (Remote-First)</h3>
+          <ul>
+            <li data-vi="<strong>Giao tiếp bất đồng bộ rõ ràng:</strong> Báo cáo tiến độ hàng ngày súc tích (Đã xong / Đang làm / Blocker & Giải pháp đề xuất) qua Slack, Discord, Teams, Jira."
+                data-en="<strong>Clear Async Communication:</strong> Structured daily updates (Done / Next / Blockers + Proposed Fix) across Slack, Discord, Teams & Jira.">
+              <strong>Giao tiếp bất đồng bộ rõ ràng:</strong> Báo cáo tiến độ hàng ngày súc tích (Đã xong / Đang làm / Blocker &amp; Giải pháp đề xuất) qua Slack, Discord, Teams, Jira.
+            </li>
+            <li data-vi="<strong>Tự chủ gỡ lỗi (Self-Debugging):</strong> Đọc kỹ Official Docs, logs & viết unit test tái hiện lỗi trước khi đặt câu hỏi có cấu trúc cho Mentor/Tech Lead."
+                data-en="<strong>Autonomous Debugging:</strong> Reproduce bugs with isolated tests and consult official docs/logs before escalating structured questions.">
+              <strong>Tự chủ gỡ lỗi (Self-Debugging):</strong> Đọc kỹ Official Docs, logs &amp; viết unit test tái hiện lỗi trước khi đặt câu hỏi có cấu trúc cho Mentor/Tech Lead.
+            </li>
+            <li data-vi="<strong>Chuẩn Git Flow & PR sạch:</strong> Chia nhánh theo tính năng, Conventional Commits và viết mô tả Pull Request kèm checklist kiểm thử."
+                data-en="<strong>Clean Git Flow & PRs:</strong> Feature branching, Conventional Commits, and self-reviewed Pull Requests with verification checklists.">
+              <strong>Chuẩn Git Flow &amp; PR sạch:</strong> Chia nhánh theo tính năng, Conventional Commits và viết mô tả Pull Request kèm checklist kiểm thử.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;width:100%;">
+      <div>© 2026 Nguyễn Công Minh · Full-Stack Web Developer (Ho Chi Minh City, GMT+7)</div>
+      <div>
+        <a href="mailto:afk4399@gmail.com" style="color:#5eead4;">afk4399@gmail.com</a> ·
+        <a href="https://github.com/minh5499999" target="_blank" rel="noopener" style="color:#5eead4;">github.com/minh5499999</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    let currentLang = 'vi';
+    function toggleLang() {
+      currentLang = currentLang === 'vi' ? 'en' : 'vi';
+      document.documentElement.lang = currentLang;
+      document.querySelectorAll('[data-vi][data-en]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + currentLang);
+      });
+    }
+  </script>
+</body>
+</html>
